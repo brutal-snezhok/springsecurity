@@ -30,12 +30,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                //order of matchers does matter!
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
-                .antMatchers(DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.name())
-                .antMatchers(POST, "/management/api/**").hasAuthority(COURSE_WRITE.name())
-                .antMatchers(PUT, "/management/api/**").hasAuthority(COURSE_WRITE.name())
-                .antMatchers(GET,"/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
+                .antMatchers(DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+                .antMatchers(POST, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+                .antMatchers(PUT, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+                .antMatchers("/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
                 .anyRequest()
                 .authenticated()
                 .and()
