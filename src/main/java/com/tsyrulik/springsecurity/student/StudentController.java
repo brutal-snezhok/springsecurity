@@ -18,7 +18,7 @@ public class StudentController {
             new Student(3, "Anna Smith")
     );
 
-    @GetMapping("/{studentId}")
+    @GetMapping("{studentId}")
     public Student getStudent(@PathVariable("studentId") Integer studentId) {
         return STUDENTS.stream()
                     .filter(st -> st.getStudentId().equals(studentId))
